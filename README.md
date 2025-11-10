@@ -143,12 +143,18 @@ docs/
 ```
 
 Rendered previews with fixed height (365):
-
-<p align="center">
+| ChatBot | Message |
+|---------------|--------|
+|<p align="center">
   <img src="docs/screenshots/01_welcome.png" alt="Welcome" height="365" />
-</p>
+</p> | |
+|<p align="center">
+  <img src="docs/screenshots/02_chat_empty.png" alt="Chat Empty State" height="365" />
+</p> | |
+
 
 <p align="center">
+  <img src="docs/screenshots/02_chat_empty.png" alt="Chat Empty State" height="365" />
   <img src="docs/screenshots/02_chat_empty.png" alt="Chat Empty State" height="365" />
   <img src="docs/screenshots/03_chat_reply.png" alt="Chat Reply" height="365" />
   <img src="docs/screenshots/04_chat_catalog.png" alt="Chat Catalog" height="365" />
