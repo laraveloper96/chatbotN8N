@@ -133,37 +133,6 @@ You can:
 ## Screenshots
 Attach four screenshots here. Suggested file layout:
 
-```
-docs/
-└── screenshots/
-    ├── 01_welcome.png
-    ├── 02_chat_empty.png
-    ├── 03_chat_reply.png
-    └── 04_chat_catalog.png
-```
-
-Rendered previews with fixed height (365):
-| ChatBot | Message |
-|---------------|--------|
-|<p align="center">
-  <img src="docs/screenshots/01_welcome.png" alt="Welcome" height="365" />
-</p> | |
-|<p align="center">
-  <img src="docs/screenshots/02_chat_empty.png" alt="Chat Empty State" height="365" />
-</p> | |
-
-
-<p align="center">
-  <img src="docs/screenshots/02_chat_empty.png" alt="Chat Empty State" height="365" />
-  <img src="docs/screenshots/02_chat_empty.png" alt="Chat Empty State" height="365" />
-  <img src="docs/screenshots/03_chat_reply.png" alt="Chat Reply" height="365" />
-  <img src="docs/screenshots/04_chat_catalog.png" alt="Chat Catalog" height="365" />
-</p>
-
-If you prefer a different size, change the `height` attribute (GitHub Markdown supports inline HTML).
-
-Table layout with two columns:
-
 | ChatBot | Message |
 |---|---|
 | <img src="docs/screenshots/01_welcome.png" alt="Welcome" height="365" /> | <img src="docs/screenshots/03_chat_reply.png" alt="Chat Reply" height="365" /> |
