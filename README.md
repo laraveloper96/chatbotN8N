@@ -142,11 +142,19 @@ docs/
     └── 04_chat_catalog.png
 ```
 
-Markdown placeholders (replace with your images):
-- `![Welcome](docs/screenshots/01_welcome.png)`
-- `![Chat Empty State](docs/screenshots/02_chat_empty.png)`
-- `![Chat Reply](docs/screenshots/03_chat_reply.png)`
-- `![Chat Catalog](docs/screenshots/04_chat_catalog.png)`
+Rendered previews with fixed height (365):
+
+<p align="center">
+  <img src="docs/screenshots/01_welcome.png" alt="Welcome" height="365" />
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/02_chat_empty.png" alt="Chat Empty State" height="365" />
+  <img src="docs/screenshots/03_chat_reply.png" alt="Chat Reply" height="365" />
+  <img src="docs/screenshots/04_chat_catalog.png" alt="Chat Catalog" height="365" />
+</p>
+
+If you prefer a different size, change the `height` attribute (GitHub Markdown supports inline HTML).
 
 ## Status and next steps
 Summary (see `IA/PROGRESS.md` for details):
