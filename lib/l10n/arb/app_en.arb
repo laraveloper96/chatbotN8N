@@ -1,0 +1,28 @@
+{
+    "@@locale": "en",
+    "appTitle": "Chat App n8n",
+    "welcomeTitle": "Welcome!",
+    "welcomeSubtitle": "Enter your name to start chatting",
+    "nameLabel": "Your name",
+    "nameHint": "e.g., Laraveloper",
+    "startChatButton": "Start Chat",
+    "nameErrorEmpty": "Please enter your name",
+    "nameErrorShort": "Name must be at least 2 characters",
+    "chatWithUserName": "Chat with {userName}",
+    "@chatWithUserName": {
+      "description": "Title for chat screen including user's name",
+      "placeholders": {
+        "userName": {"type": "String"}
+      }
+    },
+    "emptyChatGreeting": "Hello {userName}!",
+    "@emptyChatGreeting": {
+      "description": "Greeting when chat has no messages",
+      "placeholders": {
+        "userName": {"type": "String"}
+      }
+    },
+    "emptyChatPrompt": "Send a message to start the conversation",
+    "botTyping": "The bot is typing...",
+    "composeHint": "Type a message..."
+}

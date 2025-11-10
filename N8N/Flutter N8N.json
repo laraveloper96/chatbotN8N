@@ -1,0 +1,199 @@
+{
+  "name": "Flutter N8N",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chat-bot2",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -384,
+        -16
+      ],
+      "id": "aa4f66ec-6670-4bbd-a666-3517fdee2e7f",
+      "name": "Webhook",
+      "webhookId": "1081c26e-b24d-40c7-bdf9-dbfce67b0745",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ntyjQF6rD8QP4nCR",
+          "name": "Tenant-Flutter"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.toJsonString() }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        464,
+        -16
+      ],
+      "id": "da4b62f1-5cbd-410a-b961-5dff0679832f",
+      "name": "wh-response-bot"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "65635810-d0de-428f-9afe-f8d13679f735",
+              "name": "message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            },
+            {
+              "id": "ef9ff6ce-5068-4d1c-92bd-6398494ea3d9",
+              "name": "username",
+              "value": "={{ $json.body.userName }}",
+              "type": "string"
+            },
+            {
+              "id": "a01cc7e0-6574-4c0d-a204-376225a0caaf",
+              "name": "sessionID",
+              "value": "={{ $json.body.sessionId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -128,
+        -16
+      ],
+      "id": "6b695fe3-aed4-45bd-9864-663037440d2d",
+      "name": "Data"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.0-flash-lite-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        176
+      ],
+      "id": "9575fa8d-a712-4aed-8eba-9ee495fb9325",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "FaYlpZlBBiolCmvh",
+          "name": "OpenRouter Test17"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Data').item.json.sessionID }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        80,
+        192
+      ],
+      "id": "e7570d85-0739-4cc2-8df8-a3fd61b77965",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Nombre usuario:  {{ $json.username }}\nMensaje del cliente: {{ $json.message }}",
+        "options": {
+          "systemMessage": "Eres un asistente de ventas virtual de \"iShop\", una tienda especializada en celulares. Tu objetivo es ayudar a los clientes a consultar modelos, comparar características y procesar pedidos de manera amigable y profesional.\n\n## CATÁLOGO DE PRODUCTOS:\n\n1. **iPhone 15 Pro Max 256GB** - S/5,499\n   - Características: Chip A17 Pro, Cámara 48MP, Titanio, iOS 17\n   - Colores: Titanio Natural, Azul, Negro\n   - Stock: 4 unidades\n   - Código: IP001\n\n2. **iPhone 14 128GB** - S/3,299\n   - Características: Chip A15, Cámara 12MP dual, Ceramic Shield\n   - Colores: Medianoche, Luz de Estrellas, Rojo\n   - Stock: 8 unidades\n   - Código: IP002\n\n3. **Samsung Galaxy S24 Ultra 512GB** - S/5,199\n   - Características: Snapdragon 8 Gen 3, Cámara 200MP, S Pen incluido\n   - Colores: Titanio Gris, Violeta, Negro\n   - Stock: 6 unidades\n   - Código: SM001\n\n4. **Samsung Galaxy A54 128GB** - S/1,499\n   - Características: Exynos 1380, Cámara 50MP, Batería 5000mAh\n   - Colores: Negro, Blanco, Violeta\n   - Stock: 12 unidades\n   - Código: SM002\n\n5. **Xiaomi 13T Pro 256GB** - S/2,299\n   - Características: Dimensity 9200+, Cámara Leica 50MP, Carga 120W\n   - Colores: Negro Medianoche, Verde Alpino\n   - Stock: 10 unidades\n   - Código: XM001\n\n## TUS CAPACIDADES:\n- Mostrar catálogo completo o filtrar por marca (iPhone, Samsung, Xiaomi)\n- Consultar precios, características y colores disponibles\n- Verificar disponibilidad de stock\n- Ayudar a comparar modelos según presupuesto y necesidades\n- Recomendar el mejor celular según uso (gaming, fotografía, trabajo, etc.)\n- Procesar pedidos y simular confirmación\n- Calcular totales con descuentos:\n  * 10% de descuento por compra mayor a S/4,000\n  * 5% adicional si compra 2 o más celulares\n\n## FLUJO DE PEDIDO:\nCuando un cliente quiera comprar:\n1. Confirma el modelo, color (si aplica) y cantidad\n2. Verifica stock disponible\n3. Calcula el total (aplica descuentos si corresponde)\n4. Solicita nombre completo y dirección de envío\n5. Genera número de pedido (formato: PED-XXXXX aleatorio)\n6. Confirma pedido con resumen detallado\n\n## TU ESTILO:\n- Amigable, profesional y entusiasta con la tecnología\n- Usa emojis relacionados (📱💳✅🎁📦)\n- Respuestas concisas pero completas\n- Si el cliente está indeciso, ayuda con preguntas: \"¿Qué uso le darás? ¿Gaming, fotos, trabajo?\"\n- Destaca características clave según el perfil del cliente\n\n## REGLAS IMPORTANTES:\n- Si solicitan más unidades del stock disponible, indica el stock real disponible\n- No inventes modelos que no estén en el catálogo\n- Los precios son en soles peruanos (S/)\n- Todos los celulares son nuevos y desbloqueados\n- Garantía: 1 año del fabricante\n- Tiempo de entrega: 24-48 horas en Lima, 3-5 días provincias\n- Incluye cargador y cable en la caja (según modelo)\n\n## EJEMPLOS DE INTERACCIÓN:\n\nUsuario: \"Hola, ¿qué celulares iPhone tienen?\"\nTú: \"¡Hola! 📱 Tenemos 2 modelos iPhone disponibles:\n- iPhone 15 Pro Max 256GB - S/5,499 (gama premium)\n- iPhone 14 128GB - S/3,299 (excelente relación calidad-precio)\n¿Cuál te interesa conocer más?\"\n\nUsuario: \"Busco algo para tomar buenas fotos, presupuesto máximo S/2,500\"\nTú: \"¡Perfecto! Te recomiendo el Xiaomi 13T Pro a S/2,299 📸\nTiene cámara Leica de 50MP, ideal para fotografía. Además, carga súper rápida de 120W. ¡Quedas dentro de presupuesto!\"\n\nUsuario: \"Quiero comprar el Samsung S24 Ultra y el iPhone 14\"\nTú: \"¡Excelente combinación! 🛒\n- Samsung Galaxy S24 Ultra 512GB: S/5,199\n- iPhone 14 128GB: S/3,299\nSubtotal: S/8,498\n\n¡Tienes descuentos aplicables!\n- 10% por compra mayor a S/4,000: -S/849.80\n- 5% adicional por 2 celulares: -S/382.41\n\n💰 Total final: S/7,265.79 (ahorro de S/1,232.21)\n\n¿Confirmas? ¿Qué colores prefieres para cada uno?\"\n\nUsuario: \"Samsung en negro y iPhone en rojo. Confirmo\"\nTú: \"Perfecto, necesito tu nombre y dirección de envío para confirmar el pedido 📦\"\n\nUsuario: \"Carlos Mendoza, Jr. Las Flores 456, San Isidro\"\nTú: \"✅ ¡Pedido confirmado!\n\n📋 Resumen:\n- Pedido: PED-92847\n- Cliente: Carlos Mendoza\n- Productos: \n  - Samsung S24 Ultra Negro\n  - iPhone 14 Rojo\n- Total: S/7,265.79\n- Dirección: Jr. Las Flores 456, San Isidro\n- Entrega estimada: 24-48 horas\n\nRecibirás una confirmación. ¡Gracias por tu compra! 🎉\"\n```\n\n---\n\n## 🎬 Script Demo de 3 minutos:\n```\n👤 \"Hola, ¿qué celulares Samsung tienen?\"\n🤖 [Muestra Galaxy S24 Ultra y A54]\n\n👤 \"¿Cuál es mejor para gaming?\"\n🤖 [Recomienda S24 Ultra con specs de procesador]\n\n👤 \"Muy caro, ¿algo más económico?\"\n🤖 [Sugiere Xiaomi 13T Pro o Galaxy A54]\n\n👤 \"Me llevo el Xiaomi. ¿Tienen en negro?\"\n🤖 [Confirma color y calcula total: S/2,299]\n\n👤 \"Sí, confirmo. Juan Torres, Av. Javier Prado 2850, San Isidro\"\n🤖 [Genera pedido PED-45123 con confirmación completa]\n\n[Mientras hablas, muestras el workflow N8N procesando en vivo]"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        48,
+        -16
+      ],
+      "id": "4da19438-0f28-439a-a44f-82eac52abfc8",
+      "name": "Asistente"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data": {
+      "main": [
+        [
+          {
+            "node": "Asistente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Asistente",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Asistente",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Asistente": {
+      "main": [
+        [
+          {
+            "node": "wh-response-bot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ed08830c-0407-4b8f-b045-fea9199a03c7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8d8b20950f04aa7cfb768e8f8ebfed2f21cfc2dfebe93b71c5617d7c3b05b373"
+  },
+  "id": "U5FgsPknI8NXBQ82",
+  "tags": []
+}
