@@ -162,6 +162,13 @@ Rendered previews with fixed height (365):
 
 If you prefer a different size, change the `height` attribute (GitHub Markdown supports inline HTML).
 
+Table layout with two columns:
+
+| ChatBot | Message |
+|---|---|
+| <img src="docs/screenshots/01_welcome.png" alt="Welcome" height="365" /> | <img src="docs/screenshots/03_chat_reply.png" alt="Chat Reply" height="365" /> |
+| <img src="docs/screenshots/02_chat_empty.png" alt="Chat Empty State" height="365" /> | <img src="docs/screenshots/04_chat_catalog.png" alt="Chat Catalog" height="365" /> |
+
 ## Status and next steps
 Summary (see `IA/PROGRESS.md` for details):
 - Completed: core architecture, Welcome, Chat (UI/state/service), n8n integration, l10n, and theme refinements.
